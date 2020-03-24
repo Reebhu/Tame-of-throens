@@ -42,4 +42,25 @@ public class GoldenCrownTest
 		Solution.main(args);
 	}
 
+	@Test
+	public void testInput4()
+	{
+		final URL inputURL = GoldenCrownTest.class.getResource("TestInput4.txt");
+		final String path = inputURL.getPath().replace("%20", " ");
+		final String args[] = {
+				path
+		};
+		Solution.main(args);
+	}
+
+	@Test
+	public void testInput5()
+	{
+		final URL inputURL = GoldenCrownTest.class.getResource("TestInput5.txt");
+		final String path = inputURL.getPath().replace("%20", " ");
+		final String args[] = {
+				path
+		};
+		Solution.main(args);
+	}
 }

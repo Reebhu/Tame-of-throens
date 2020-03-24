@@ -1,10 +1,6 @@
-package com.tameofthrones.input;
+package com.tameofthrones.kingdom;
 
-import com.tameofthrones.kingdom.Kingdom;
-import com.tameofthrones.kingdom.KingdomEnum;
-import com.tameofthrones.message.MessageDecoder;
-
-public class Ally
+public class AllyFinder
 {
 	public String findAlly(String input)
 	{
@@ -17,11 +13,9 @@ public class Ally
 		final KingdomEnum kingdomEnum = KingdomEnum.valueOf(kingdomName.toUpperCase());
 
 		// Create the kingdom object with its emblem.
-		final Kingdom kingdom = Kingdom.Builder.create().withKingdom(kingdomEnum).withEmblem().build();
+		final Kingdom ally = Kingdom.Builder.create().withKingdom(kingdomEnum).withEmblem().build();
 
-		final MessageDecoder msgDecode = new MessageDecoder();
-
-		final boolean hasAlligence = msgDecode.processMessage(msg.toCharArray(), kingdom.getEmblemChars());
+		final boolean hasAlligence = ally.hasAlligence(msg.toCharArray());
 
 		if (hasAlligence)
 		{

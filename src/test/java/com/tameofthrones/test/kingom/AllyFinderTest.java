@@ -1,14 +1,19 @@
-package com.tameofthrones.test;
+package com.tameofthrones.test.kingom;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import com.tameofthrones.input.Ally;
+import com.tameofthrones.kingdom.AllyFinder;
 
-public class AllyTest
+public class AllyFinderTest
 {
-	Ally ally = new Ally();
+	AllyFinder ally = new AllyFinder();
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Test
 	public void test_success()
@@ -32,5 +37,12 @@ public class AllyTest
 	public void test_failure()
 	{
 		assertEquals("", ally.findAlly("AIR OWLAOWLBOWLC"));
+	}
+
+	@Test
+	public void test_failure_IllegalArumentexception()
+	{
+		thrown.expect(IllegalArgumentException.class);
+		ally.findAlly("KSJ OWLAOWLBOWLC");
 	}
 }

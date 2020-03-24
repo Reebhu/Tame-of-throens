@@ -1,5 +1,10 @@
 package com.tameofthrones.kingdom;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.tameofthrones.cipher.SeasarCipher;
+
 public class Kingdom
 {
 	private KingdomEnum kingdom;
@@ -7,27 +12,79 @@ public class Kingdom
 	private String emblem;
 
 	/**
-	 * @return the kingdom
+	 * Create a map with <char,int> as <key,value> pair to count the number of times
+	 * char is repeated in the emblem.
+	 *
+	 * @param emblem
+	 * @return
 	 */
-	public KingdomEnum getKingdom()
+	private Map<Character, Integer> lookUpEmblem(char[] emblem)
 	{
-		return kingdom;
+		final Map<Character, Integer> lookTable = new HashMap<>();
+		for (final char key : emblem)
+		{
+			if (lookTable.containsKey(key))
+			{
+				lookTable.put(key, lookTable.get(key) + 1);
+			}
+			else
+			{
+				lookTable.put(key, 1);
+			}
+		}
+		return lookTable;
 	}
 
 	/**
-	 * @return the emblem
+	 * Process the msg and tells if the kingdom is an ally to SPACE kingdom or not.
+	 *
+	 * @param msg
+	 * @return
 	 */
-	public String getEmblem()
+	public boolean hasAlligence(char[] msg)
 	{
-		return emblem;
-	}
+		char[] emblemChars = emblem.toCharArray();
 
-	/**
-	 * @return the emblem
-	 */
-	public char[] getEmblemChars()
-	{
-		return emblem.toCharArray();
+		// Obtain encode emblem.
+		emblemChars = SeasarCipher.getInstance().encodeEmblem(emblemChars);
+
+		// Create the lookup map for given emblem.
+		final Map<Character, Integer> lookup = lookUpEmblem(emblemChars);
+
+		int i = 0;
+
+		// Iterate over the msg and if the characters match reduce the count by 1 from
+		// Map.If all the values in Map is found all the keys should have value 0 in
+		// lookup.
+		while (i < msg.length)
+		{
+			int count = 0;
+			final char key = msg[i];
+			if (lookup.containsKey(key))
+			{
+				count = lookup.get(key);
+				if (count > 0)
+				{
+					lookup.put(key, count - 1);
+				}
+			}
+			i++;
+		}
+		boolean hasWonAlligence = true;
+
+		// Check for the values in lookUp and even if one value is greater than 0 all
+		// the letters are not present in chiper message. Hence, that Kingdom will not
+		// ally itself to King Shan.
+		for (final Map.Entry<Character, Integer> entry : lookup.entrySet())
+		{
+			if (entry.getValue() > 0)
+			{
+				hasWonAlligence = false;
+				break;
+			}
+		}
+
+		return hasWonAlligence;
 	}
 
 	@Override

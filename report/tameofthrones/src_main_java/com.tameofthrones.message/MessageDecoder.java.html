@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MessageDecoder.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">GoldenCrownTest (1 Mar, 2020 3:10:18 PM)</a> &gt; <a href="../../index.html" class="el_group">tameofthrones</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.tameofthrones.message</a> &gt; <span class="el_source">MessageDecoder.java</span></div><h1>MessageDecoder.java</h1><pre class="source lang-java linenums">package com.tameofthrones.message;
+
+import java.util.Map;
+
+import com.tameofthrones.chiper.LookUp;
+import com.tameofthrones.chiper.SeasarCipher;
+
+<span class="fc" id="L8">public class MessageDecoder</span>
+{
+	public boolean processMessage(char[] msg, char[] emblem)
+	{
+		// Obtain encode emblem.
+<span class="fc" id="L13">		emblem = SeasarCipher.getInstance().encodeEmblem(emblem);</span>
+
+		// Create the lookup map fpr given emblem.
+<span class="fc" id="L16">		final Map&lt;Character, Integer&gt; lookup = LookUp.getInstance().lookUpEmblem(emblem);</span>
+
+<span class="fc" id="L18">		int i = 0;</span>
+
+		// Iterate over the msg and if the characters match reduce the count by 1 from
+		// Map.If all the values in Map is found all the keys should have value 0 in
+		// lookup.
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		while (i &lt; msg.length)</span>
+		{
+<span class="fc" id="L25">			int count = 0;</span>
+<span class="fc" id="L26">			final char key = msg[i];</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">			if (lookup.containsKey(key))</span>
+			{
+<span class="fc" id="L29">				count = lookup.get(key);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">				if (count &gt; 0)</span>
+				{
+<span class="fc" id="L32">					lookup.put(key, count - 1);</span>
+				}
+			}
+<span class="fc" id="L35">			i++;</span>
+		}
+<span class="fc" id="L37">		boolean hasWonAlligence = true;</span>
+
+		// Check for the values in lookUp and even if one value is greater than 0 all
+		// the letters are not present in chiper message. Hence, that Kingdom will not
+		// ally itself to King Shan.
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		for (final Map.Entry&lt;Character, Integer&gt; entry : lookup.entrySet())</span>
+		{
+<span class="fc bfc" id="L44" title="All 2 branches covered.">			if (entry.getValue() &gt; 0)</span>
+			{
+<span class="fc" id="L46">				hasWonAlligence = false;</span>
+<span class="fc" id="L47">				break;</span>
+			}
+		}
+
+<span class="fc" id="L51">		return hasWonAlligence;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>GoldenCrownTest (1 Mar, 2020 3:10:18 PM)</div></body></html>

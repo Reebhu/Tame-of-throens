@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>SeasarCipher.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">GoldenCrownTest (1 Mar, 2020 3:10:18 PM)</a> &gt; <a href="../../index.html" class="el_group">tameofthrones</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.tameofthrones.chiper</a> &gt; <span class="el_source">SeasarCipher.java</span></div><h1>SeasarCipher.java</h1><pre class="source lang-java linenums">package com.tameofthrones.chiper;
+
+/**
+ * Represents the Seasar Chiper. Made singleton as this class should be
+ * instantiated just once.
+ *
+ * @author Reebhu
+ */
+public class SeasarCipher
+{
+	private static SeasarCipher INSTANCE;
+
+	private static final int MAX_NO_ALPHABETS = 26;
+
+<span class="fc" id="L15">	private final char[] queue = new char[MAX_NO_ALPHABETS];</span>
+
+	private static final char ch = 'a';
+
+	public static SeasarCipher getInstance()
+	{
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">		if (INSTANCE == null)</span>
+		{
+<span class="fc" id="L23">			return new SeasarCipher();</span>
+		}
+<span class="nc" id="L25">		return INSTANCE;</span>
+	}
+
+	/**
+	 * Create a queue with all the Alphabets of English in lowercase.
+	 */
+	private void fillQueue()
+	{
+<span class="fc bfc" id="L33" title="All 2 branches covered.">		for (int i = 0; i &lt; MAX_NO_ALPHABETS; i++)</span>
+		{
+<span class="fc" id="L35">			queue[i] = (char) (ch + i);</span>
+		}
+<span class="fc" id="L37">	}</span>
+
+	/**
+	 * Encode the given charter according to Seasar Chiper.
+	 *
+	 * @param character
+	 * @param len
+	 * @return Encoded character.
+	 */
+	private char getEncodedChar(char character, int len)
+	{
+<span class="fc" id="L48">		final int index = character - ch;</span>
+		// Effectively working like a circular array i.e. when index &gt; 26 it will start
+		// at 0.
+<span class="fc" id="L51">		return queue[(index + len) % MAX_NO_ALPHABETS];</span>
+	}
+
+	/**
+	 * Encode the emblem to Seasar Chiper
+	 *
+	 * @param emblem
+	 * @return encoded emblem.
+	 */
+	public char[] encodeEmblem(char[] emblem)
+	{
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (int i = 0; i &lt; emblem.length; i++)</span>
+		{
+<span class="fc" id="L64">			emblem[i] = getEncodedChar(emblem[i], emblem.length);</span>
+		}
+<span class="fc" id="L66">		return emblem;</span>
+	}
+
+<span class="fc" id="L69">	private SeasarCipher()</span>
+	{
+<span class="fc" id="L71">		fillQueue();</span>
+<span class="fc" id="L72">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>GoldenCrownTest (1 Mar, 2020 3:10:18 PM)</div></body></html>

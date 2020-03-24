@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Solution.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">GoldenCrownTest (1 Mar, 2020 3:10:18 PM)</a> &gt; <a href="../../index.html" class="el_group">tameofthrones</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.tameofthrones</a> &gt; <span class="el_source">Solution.java</span></div><h1>Solution.java</h1><pre class="source lang-java linenums">package com.tameofthrones;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+import com.tameofthrones.input.Ally;
+
+<span class="nc" id="L10">public class Solution</span>
+{
+	// ==CONSTANTS==
+	private static final String NONE = &quot;NONE&quot;;
+
+	private static final String SPACE = &quot;SPACE&quot;;
+
+	private static final int requiredAllies = 3;
+
+	// == MAIN ==
+	public static void main(String[] args)
+	{
+<span class="fc" id="L22">		final String filePath = args[0];</span>
+<span class="fc" id="L23">		final File file = new File(filePath);</span>
+
+<span class="fc" id="L25">		final Ally inputprocessor = new Ally();</span>
+<span class="fc" id="L26">		final StringBuilder output = new StringBuilder();</span>
+
+		// Since we want to check if space can be the ruler.
+<span class="fc" id="L29">		output.append(SPACE + &quot; &quot;);</span>
+<span class="fc" id="L30">		String answer = &quot;&quot;;</span>
+		BufferedReader reader;
+		try
+		{
+<span class="fc" id="L34">			reader = new BufferedReader(new FileReader(file));</span>
+			String input;
+<span class="fc bfc" id="L36" title="All 2 branches covered.">			while ((input = reader.readLine()) != null)</span>
+			{
+				try
+				{
+<span class="fc" id="L40">					answer = inputprocessor.findAlly(input);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">					if (!answer.isEmpty())</span>
+					{
+<span class="fc" id="L43">						output.append(answer + &quot; &quot;);</span>
+					}
+<span class="fc" id="L45">				}</span>
+<span class="fc" id="L46">				catch (final IllegalArgumentException e)</span>
+				{
+				}
+			}
+<span class="fc" id="L50">			printOutput(output);</span>
+<span class="fc" id="L51">		}</span>
+<span class="nc" id="L52">		catch (final IOException e)</span>
+		{
+<span class="nc" id="L54">			System.out.println(&quot;Exception :&quot; + e.getMessage());</span>
+		}
+
+<span class="fc" id="L57">	}</span>
+
+	private static void printOutput(StringBuilder output)
+	{
+<span class="fc" id="L61">		final String[] allies = output.toString().split(&quot; &quot;);</span>
+
+		// The number of allies need to be greater than 3 to become the ruler.
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (allies.length &gt;= requiredAllies + 1)</span>
+		{
+<span class="fc" id="L66">			System.out.println(output.toString().trim());</span>
+<span class="fc" id="L67">		}</span>
+		else
+		{
+<span class="fc" id="L70">			System.out.println(NONE);</span>
+		}
+<span class="fc" id="L72">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>GoldenCrownTest (1 Mar, 2020 3:10:18 PM)</div></body></html>

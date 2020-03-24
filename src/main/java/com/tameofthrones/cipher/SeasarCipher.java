@@ -1,4 +1,4 @@
-package com.tameofthrones.chiper;
+package com.tameofthrones.cipher;
 
 /**
  * Represents the Seasar Chiper. Made singleton as this class should be
