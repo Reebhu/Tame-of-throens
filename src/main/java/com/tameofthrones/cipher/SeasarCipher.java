@@ -64,6 +64,7 @@ public class SeasarCipher
 			emblem[i] = getEncodedChar(emblem[i], emblem.length);
 		}
 		return emblem;
+		System.out.print();
 	}
 
 	private SeasarCipher()
